@@ -38,12 +38,19 @@
     </div>
 
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" renderer="antialias: true;">
+        <!-- アセットの定義 -->
+        <a-assets>
+            <a-asset-item id="my-model" src="./models/bottle.glb"></a-asset-item>
+        </a-assets>
+
         <a-marker preset="hiro">
-            <a-box position="0 0.5 0" 
-                   material="color: red;"
-                   scale="1 1 1"
-                   animation="property: rotation; to: 0 360 0; dur: 2000; easing: linear; loop: true">
-            </a-box>
+            <!-- GLBモデルを表示 -->
+            <a-gltf-model src="#my-model"
+                         position="0 0 0"
+                         scale="1 1 1"
+                         rotation="0 0 0"
+                         animation="property: rotation; to: 0 360 0; dur: 2000; easing: linear; loop: true">
+            </a-gltf-model>
         </a-marker>
 
         <a-entity camera></a-entity>
@@ -53,6 +60,11 @@
         // ローディング画面を非表示にする
         window.addEventListener('arjs-video-loaded', function() {
             document.querySelector('.arjs-loader').classList.add('hidden');
+        });
+
+        // モデルの読み込み状態を確認（オプション）
+        document.querySelector('#my-model').addEventListener('model-loaded', function() {
+            console.log('モデルの読み込みが完了しました');
         });
     </script>
 </body>
